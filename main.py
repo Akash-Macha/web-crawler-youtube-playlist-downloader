@@ -17,7 +17,7 @@ def motion(event):  # https://stackoverflow.com/a/22925718
 
 
 def doNothing():
-    print("Crap")
+    print("It does nothing, we'll implement it later!")
 
 
 def create_menu(root):
