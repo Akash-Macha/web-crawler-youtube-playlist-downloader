@@ -1,5 +1,7 @@
 # -Akash Macha  09 December 2018 (Sunday)  21:22  PM
 
+
+
 1.  open the written text file using batch code,
 
     {   which we'll run via from our application!  }
@@ -17,3 +19,8 @@
     [ history could include, the channel name,  and playList name, and url]
 
 4.  add exit button functionality
+
+Achieved:
+
+0.  Made it completely using classes!  in branch1       #  11 December 2018 (Tuesday)  16:41  PM
+
