@@ -3,67 +3,133 @@
 
 from tkinter import *
 from web_crawler import *
+from tkinter.filedialog import *
+from tkinter import ttk
 
-
-class UtiliyFunctions(object):
-    def __init__(self):
-        pass
-
-    def sendUrl(self, event):
-        url = entry.get()
-        extract(url)
-
-    def clearEntry(self, event):
-        entry.delete(0, 'end')
-
-    def motion(self, event):  # https://stackoverflow.com/a/22925718
-        x, y = event.x, event.y
-        return str(str(x) + ", " + str(y))
-
-    def doNothing(self):
-        print("It does nothing, we'll implement it later!")
 
 
 class PlotFrame(object):
-    def __init__(self, root):
+    def __init__(self, root=None):
         # creating a utility object to use it for the whole class
-        self.util = UtiliyFunctions()
+        # self.util = UtiliyFunctions()
         # ---- Top Frame------
         topFrame = Frame(root)
         topFrame.pack(side=TOP)
 
         myLabel_1 = Label(topFrame, text="Youtube Play List Title Extractor", fg='black')
         myLabel_1.config(font=("Helvetica 16 bold italic", 30))
-        myLabel_1.pack()
+        myLabel_1.grid(row=0)
 
         # ---- Middle Frame------
         middleFrame = Frame(root)
         middleFrame.pack(side=TOP)
 
         myLabel_2 = Label(middleFrame, text="Paste URL: ", fg='black')
-        myLabel_2.grid(row=0, sticky=E)
+        myLabel_2.grid(row=1, sticky=E)
 
-        global entry
-        entry = Entry(middleFrame, text="Paste Url: ", width=80)
-        entry.grid(row=0, column=1)
-        entry.focus_set()
+        styleEntry = ttk.Style()
+        styleEntry.configure("TEntry",
+                             padding=5)
+        self.entry = ttk.Entry(middleFrame, width=80)
+        self.entry.grid(row=1, column=1)
+        self.entry.focus_set()
 
-        myButton = Button(middleFrame, text="Extract", height=5, width=20)
-        myButton.bind("<Button-1>", self.util.sendUrl)
-        myButton.grid(row=1, column=1)
+        # --------- crating check button ---------
+
+        self.checkButtonStatus = IntVar()
+        self.checkButtonStatus.set(1)
+        checkButton = Checkbutton(middleFrame,
+                                  text="make a text file with those titles? ",
+                                  variable=self.checkButtonStatus,
+                                  ).grid(row=2, column=1, pady=10)  # sticky=N
+        # print("creating check button:  ", self.checkButtonStatus.get())
+
+        # ------- creating and styling the extract button -----------
+        style = ttk.Style()
+        style.configure("TButton",
+                        foreground="black",
+                        font="Arial 15 bold",
+                        padding=20)
+
+        extractButton = ttk.Button(middleFrame,
+                                   text="Extract",
+                                   command=self.sendUrl)
+        extractButton.grid(row=3, column=1, pady=15)
+
+
+        # extractButton = Button(middleFrame, text="Extract", height=4, width=20)
+        # extractButton.bind("<Button-1>", self.sendUrl)
+        ''' extractButton.bind("<Button-1>", self.setStatusBarToProcessing) '''
+        # extractButton.grid(row=3, column=1, pady=30)
+
 
         clearTextButton = Button(middleFrame, text="Clear")
-        clearTextButton.bind("<Button-1>", self.util.clearEntry)
-        clearTextButton.grid(row=1, column=2)
+        clearTextButton.bind("<Button-1>", self.clearEntry)
+        clearTextButton.grid(row=3, column=2, sticky=W, padx=1)
+
 
         # ---- Status Bar & Menu ------
         self.create_menu(root)
         self.create_statusBar(root)
+        # self.create_innerView(root)
+
+    # def create_innerView(self, root):
+
+
+    def setStatusToEnterCorrectUrl(self):
+        self.currentStatus.set("Enter correct Url please!")
+
+    def sendUrl(self):
+        self.currentStatus.set("Processing...")
+        url = self.entry.get()
+        titles = []
+        try:
+            titles = extract(url)
+        except requests.exceptions.MissingSchema:   # exception raised for bad url
+            self.currentStatus.set("Invalid or Empty Url, Please enter the correct url...")
+            self.clearEntry()
+        # print(self.checkButtonStatus)
+        if self.checkButtonStatus.get() == 1:
+            self.file_save(titles, url)
+            self.currentStatus.set("Task Completed! Waiting for new Url!")
+
+
+    def file_save(self, titles, url):
+        """get a filename and save the text in the editor widget """
+        # default extension is optional, here we'll add .txt if missing
+        fout = asksaveasfile(mode='w', defaultextension='.txt')
+        text2save = self.gatherRequiredInfo(titles, url)
+
+        fout.write(text2save)
+        fout.close()
+
+    def gatherRequiredInfo(self, titles, url):
+        return "Url: "+ url + "\n\n" + "\n".join(titles)
+
+
+    def clearEntry(self, event=None):
+        self.entry.delete(0, 'end')
+
+    # def motion(self, event):  # https://stackoverflow.com/a/22925718
+    #     x, y = event.x, event.y
+    #     self.currentStatus.set("Mouse is at: " + str(str(x) + ", " + str(y)))
+
+    def doNothing(self):
+        print("It does nothing, we'll implement it later!")
+
+    def setStatusBarToProcessing(self, event):
+        pass
+
+    def returnCurrentMousePosition(self, event=None):
+        return str(str(event.x) + ", " + str(event.y))
 
     def create_statusBar(self, root):
-        # statusBar = Label(root, text="Preparing to do nothing...", bd=1, relief=SUNKEN, anchor=W)
-        currentMousePosition = "Waiting for the url..."
-        statusBar = Label(root, text=currentMousePosition, bd=1, relief=SUNKEN, anchor=W)
+        self.currentStatus = StringVar()
+        self.currentStatus.set("Waiting for url...")
+        # root.bind("<Motion>", self.motion)
+
+        statusBar = Label(root, textvariable=self.currentStatus, bd=1, relief=SUNKEN, anchor=W)
+        statusBar.bind("<Motion>", self.returnCurrentMousePosition)
         statusBar.pack(side=BOTTOM, fill=X)
 
     def create_menu(self, root):
@@ -77,37 +143,53 @@ class PlotFrame(object):
         menu.add_cascade(label="File", menu=subMenu)
 
         # adding items to subMenu and giving functionality to it
-        subMenu.add_command(label="New Project...", command=self.util.doNothing)
-        subMenu.add_command(label="New...", command=self.util.doNothing)
+        subMenu.add_command(label="New Project...", command=self.doNothing)
+        subMenu.add_command(label="New...", command=self.doNothing)
 
         # a line to separate the items in the menu
         subMenu.add_separator()
 
-        subMenu.add_command(label="Exit", command=self.util.doNothing)
+        subMenu.add_command(label="Exit", command=root.quit)
 
         # creating an other menu item
 
         editMenu = Menu(menu)
         menu.add_cascade(label='Edit', menu=editMenu)
-        editMenu.add_command(label="Redo", command=self.util.doNothing)
+        editMenu.add_command(label="Redo", command=self.doNothing)
+
+        helpMenu = Menu(menu)
+        menu.add_cascade(label='Help', menu=helpMenu)
+        helpMenu.add_command(label="About", command=self.doNothing)
+
+# class LowerFrame(object):
+#     def __init__(self, root):
+#         lowerFrame = Frame(root)
+#         lowerFrame.pack(side=BOTTOM)
+
+
 
 
 class MyWindow(object):
     def __init__(self, root):
         root.title("Youtube playlist title's extractor")
-        root.geometry("800x200")
+        root.geometry("800x250")
         PlotFrame(root)
+
+        # LowerFrame(root)
 
 
 def main():
-    print("Youtube PlayList Title Extractor!\nYou've 2 modes:\n1.GUI Mode\n2.CommandLine Mode")
-    choice = int(input("Your option(1 or 2): "))
-    if choice == 1:
-        root = Tk()
-        app = MyWindow(root)
-        root.mainloop()
-    else:
-        print("\nI'll make it work later!\nThanks for using!\n")
+    root = Tk()
+    app = MyWindow(root)
+    root.mainloop()
+    # print("Youtube PlayList Title Extractor!\nYou've 2 modes:\n1.GUI Mode\n2.CommandLine Mode")
+    # choice = int(input("Your option(1 or 2): "))
+    # if choice == 1:
+    #     root = Tk()
+    #     app = MyWindow(root)
+    #     root.mainloop()
+    # else:
+    #     print("\nI'll make it work later!\nThanks for using!\n")
 
 
 if __name__ == '__main__':

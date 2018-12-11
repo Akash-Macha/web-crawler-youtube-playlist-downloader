@@ -1,5 +1,6 @@
 ''' Extracting Video Title from a youtube playlists '''
 import time  # to calculate the execution time
+from main import PlotFrame
 
 t1 = time.time()
 
@@ -15,19 +16,19 @@ def writeSourceContentToTextFile(response_content_list):
         file.close()
 
 
-def extractTilesFromSourceContent():
+def extractTilesFromSourceContent(response_content_list):
     titles = []
-    with open('page_source.txt', 'r') as file_r:
-        for line in file_r.readlines():
-            f_index = line.find("data-title=")  # > 3000
-            if f_index != -1:
-                start_index = f_index + 12
-                req_str = ''
-                while line[start_index] != '"':
-                    req_str = req_str + line[start_index]
-                    start_index += 1
+    # with open('page_source.txt', 'r') as file_r:
+    for line in response_content_list:
+        f_index = line.find("data-title=")  # > 3000
+        if f_index != -1:
+            start_index = f_index + 12
+            req_str = ''
+            while line[start_index] != '"':
+                req_str = req_str + line[start_index]
+                start_index += 1
 
-                titles.append(req_str)
+            titles.append(req_str)
     return titles
 
 
@@ -46,27 +47,29 @@ def getSourceContent(url):
 
 ''' returns list of titles of the passed url '''
 def extract(url):
-
+    # if url == '':
+    #     PlotFrame().setStatusToEnterCorrectUrl()
     # gets the source content of the passed url in string format
     response_content_list = getSourceContent(url)
 
     # -----------------------------
     # writes the source content to a text file
-    writeSourceContentToTextFile(response_content_list)
+
+    # writeSourceContentToTextFile(response_content_list)
 
     # -----------------------------
     ''' Extracting the titles '''
-    titles = extractTilesFromSourceContent()
+    titles = extractTilesFromSourceContent(response_content_list)
 
     print('Number of videos: ', len(titles))
 
     # writing the extracted titles to a text file
-    with open('extracted_titles.txt', 'w') as file_w:
-        file_w.write('url= ' + url + '\n\n')
-        for count, value in enumerate(titles):
-            file_w.write(str(count + 1) + "  " + value)
-
-            file_w.write('\n')
+    # with open('extracted_titles.txt', 'w') as file_w:
+    #     file_w.write('url= ' + url + '\n\n')
+    #     for count, value in enumerate(titles):
+    #         file_w.write(str(count + 1) + "  " + value)
+    #
+    #         file_w.write('\n')
 
     return titles
 
