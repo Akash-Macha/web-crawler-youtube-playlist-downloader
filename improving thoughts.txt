@@ -1,6 +1,10 @@
 # -Akash Macha  09 December 2018 (Sunday)  21:22  PM
 
-
+______________________________________
+Key points:
+1.  In master we've used normal functions to accomplish our task
+2.  Int branch   branch1    we've used  classes to accomplish our task
+______________________________________
 
 1.  open the written text file using batch code,
 
@@ -20,7 +24,7 @@
 
 4.  add exit button functionality
 
+______________________________________
 Achieved:
-
 0.  Made it completely using classes!  in branch1       #  11 December 2018 (Tuesday)  16:41  PM
 
