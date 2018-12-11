@@ -1,0 +1,19 @@
+# -Akash Macha  09 December 2018 (Sunday)  21:22  PM
+
+1.  open the written text file using batch code,
+
+    {   which we'll run via from our application!  }
+
+
+    [   learn how to edit batch file from python
+    [   learn how to run batch file from python
+
+
+2.  Add tutorial button,
+    In which we'll try to expalin how to copy paste the playlist url
+    [ may be using images or related things]
+
+3.  how about adding history searches (extractions)
+    [ history could include, the channel name,  and playList name, and url]
+
+4.  add exit button functionality
