@@ -1,11 +1,13 @@
 ''' Extracting Video Title from a youtube playlists '''
 import time  # to calculate the execution time
+import pytube as pt
+import requests
 from main import PlotFrame
 
 t1 = time.time()
 
 
-import requests
+
 
 
 def writeSourceContentToTextFile(response_content_list):
@@ -75,3 +77,10 @@ def extract(url):
 
     # print("\nCheck 'source_1_titles.txt' file for list the of titles!")
     # print('It took {} sec(s) to complete the task!'.format(round(time.time() - t1)))
+
+
+def downloadCompletePlayList(url, path):
+    pass
+    pl = pt.Playlist(url)
+    pl.download_all(path)
+

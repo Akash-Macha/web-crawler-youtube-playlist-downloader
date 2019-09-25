@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3a06476a-daca-496b-93da-13a3a0682bb6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web_crawler.py" afterPath="$PROJECT_DIR$/web_crawler.py" />
     </list>
     <ignored path=".idea/" />
     <ignored path=".idea/workspace.xml" />
@@ -26,7 +24,7 @@
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="320">
-              <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+              <caret line="16" column="23" lean-forward="false" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
               <folding>
                 <element signature="e#109#130#0" expanded="true" />
               </folding>
@@ -37,7 +35,7 @@
       <file leaf-file-name="web_crawler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web_crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
+            <state relative-caret-position="1440">
               <caret line="73" column="17" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="17" />
               <folding>
                 <element signature="e#56#102#0" expanded="true" />
@@ -266,6 +264,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web_crawler.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="73" column="17" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="17" />
+          <folding>
+            <element signature="e#56#102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#109#130#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web_crawler.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="980">
           <caret line="50" column="48" lean-forward="false" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="48" />
           <folding>
@@ -288,7 +306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34020">
           <caret line="1701" column="0" lean-forward="false" selection-start-line="1701" selection-start-column="0" selection-end-line="1701" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -371,21 +388,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="1701" column="0" lean-forward="false" selection-start-line="1701" selection-start-column="0" selection-end-line="1701" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extracted_titles.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/extracted_titles.txt" />
     <entry file="file://$PROJECT_DIR$/web_crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
+        <state relative-caret-position="1440">
           <caret line="73" column="17" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="17" />
           <folding>
             <element signature="e#56#102#0" expanded="true" />
@@ -396,7 +405,7 @@
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
-          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+          <caret line="16" column="23" lean-forward="false" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
           <folding>
             <element signature="e#109#130#0" expanded="true" />
           </folding>

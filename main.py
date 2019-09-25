@@ -4,6 +4,7 @@
 from tkinter import *
 from web_crawler import *
 from tkinter.filedialog import *
+from tkinter import filedialog
 from tkinter import ttk
 
 
@@ -44,6 +45,13 @@ class PlotFrame(object):
                                   ).grid(row=2, column=1, pady=10)  # sticky=N
         # print("creating check button:  ", self.checkButtonStatus.get())
 
+        self.checkButtonDownloadPlayListStatus = IntVar()
+        self.checkButtonDownloadPlayListStatus.set(1)
+        checkButtonDownloadPlayList = Checkbutton(middleFrame,
+                                  text="Download the complete Playlist? ",
+                                  variable=self.checkButtonDownloadPlayListStatus,
+                                  ).grid(row=3, column=1, pady=10)  # sticky=N
+
         # ------- creating and styling the extract button -----------
         style = ttk.Style()
         style.configure("TButton",
@@ -53,8 +61,8 @@ class PlotFrame(object):
 
         extractButton = ttk.Button(middleFrame,
                                    text="Extract",
-                                   command=self.sendUrl)
-        extractButton.grid(row=3, column=1, pady=15)
+                                   command=self.sendUrl)  # command will take a function, which will be invoked onclick!
+        extractButton.grid(row=4, column=1, pady=15)
 
 
         # extractButton = Button(middleFrame, text="Extract", height=4, width=20)
@@ -63,7 +71,7 @@ class PlotFrame(object):
         # extractButton.grid(row=3, column=1, pady=30)
 
 
-        clearTextButton = Button(middleFrame, text="Clear")
+        clearTextButton = Button(middleFrame, text="Clear", fg='green')
         clearTextButton.bind("<Button-1>", self.clearEntry)
         clearTextButton.grid(row=3, column=2, sticky=W, padx=1)
 
@@ -88,11 +96,17 @@ class PlotFrame(object):
         except requests.exceptions.MissingSchema:   # exception raised for bad url
             self.currentStatus.set("Invalid or Empty Url, Please enter the correct url...")
             self.clearEntry()
+            return
         # print(self.checkButtonStatus)
         if self.checkButtonStatus.get() == 1:
             self.file_save(titles, url)
-            self.currentStatus.set("Task Completed! Waiting for new Url!")
 
+        if self.checkButtonDownloadPlayListStatus.get() == 1:
+            pass
+            path = filedialog.askdirectory()
+            downloadCompletePlayList(url, path)
+
+        self.currentStatus.set("Task Completed! Waiting for new Url!")
 
     def file_save(self, titles, url):
         """get a filename and save the text in the editor widget """
@@ -104,7 +118,7 @@ class PlotFrame(object):
         fout.close()
 
     def gatherRequiredInfo(self, titles, url):
-        return "Url: "+ url + "\n\n" + "\n".join(titles)
+        return "Url: " + url + "\n\n" + "\n".join(titles)
 
 
     def clearEntry(self, event=None):
@@ -172,7 +186,7 @@ class PlotFrame(object):
 class MyWindow(object):
     def __init__(self, root):
         root.title("Youtube playlist title's extractor")
-        root.geometry("800x250")
+        root.geometry("800x300")
         PlotFrame(root)
 
         # LowerFrame(root)
