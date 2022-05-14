@@ -3,6 +3,7 @@
 
 from tkinter import *
 from web_crawler import *
+from latest_web_crawler import *
 from tkinter.filedialog import *
 from tkinter import filedialog
 from tkinter import ttk
@@ -90,10 +91,12 @@ class PlotFrame(object):
     def sendUrl(self):
         self.currentStatus.set("Processing...")
         url = self.entry.get()
-        titles = []
+
+        path = filedialog.askdirectory()
+
         try:
-            titles = extract(url)
-        except requests.exceptions.MissingSchema:   # exception raised for bad url
+            titles = download_playlist_and_get_video_titles(url, path)
+        except requests.exceptions.MissingSchema:  # exception raised for bad url
             self.currentStatus.set("Invalid or Empty Url, Please enter the correct url...")
             self.clearEntry()
             return
@@ -101,10 +104,10 @@ class PlotFrame(object):
         if self.checkButtonStatus.get() == 1:
             self.file_save(titles, url)
 
-        if self.checkButtonDownloadPlayListStatus.get() == 1:
-            pass
-            path = filedialog.askdirectory()
-            downloadCompletePlayList(url, path)
+        # if self.checkButtonDownloadPlayListStatus.get() == 1:
+        #     pass
+        #     path = filedialog.askdirectory()
+        #     downloadCompletePlayList(url, path)
 
         self.currentStatus.set("Task Completed! Waiting for new Url!")
 
